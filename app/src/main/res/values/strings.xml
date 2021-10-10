@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Ehsan</string>
+    <string name="minTemp">min: %s</string>
+    <string name="maxTemp">max: %s</string>
+    <string name="feelsLikeTemp">feels like: %s</string>
+    <string name="Sydney">Sydney</string>
+    <string name="weather">weather: %s</string>
+    <string name="hu">hu</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="about_me">neme:shana
+    app version 11</string>
+    <string name="about_me_title">about me</string>
+</resources>

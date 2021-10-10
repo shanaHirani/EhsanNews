@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="news"
+            type="com.jetbrains.handson.mpp.ehsan.data.model.News" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="4dp">
+
+        <ImageView
+            android:id="@+id/imageView"
+            imgeUrl="@{news.urlToImage}"
+            android:layout_width="85dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="8dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+        <TextView
+            android:id="@+id/title_tx"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="12dp"
+            android:justificationMode="inter_word"
+            android:text="@{news.title}"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageView"
+            app:layout_constraintTop_toTopOf="@+id/imageView"
+            tools:text="news title" />
+
+        <TextView
+            android:id="@+id/publish_date_tx"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            app:FormatDate="@{news.publishedAt}"
+            android:textSize="8sp"
+            app:layout_constraintStart_toStartOf="@+id/title_tx"
+            app:layout_constraintTop_toBottomOf="@+id/title_tx"
+            tools:text="1977 11 9" />
+
+        <TextView
+            android:id="@+id/short_discription_tx"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="8dp"
+            android:justificationMode="inter_word"
+            android:text="@{news.description}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView"
+            tools:text="it is really great newsit is really great newsit is really great newsit is really great newsit is really great newsit is really great newsit is really great newsit is really great newsit is really great newsit is really
+             great newsit is really great newsit is reallyssssssss great newsit is really great news" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
