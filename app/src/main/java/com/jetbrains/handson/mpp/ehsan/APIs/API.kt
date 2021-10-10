@@ -10,7 +10,8 @@ import javax.inject.Singleton
 @Singleton
 class API @Inject constructor() {
 
-    //Http could cause problem in higher Api
+    //Http could cause security problem in higher Api it need to be manually mention in manifast it is ok to use http
+    //android:usesCleartextTraffic="true"
     //Https
     val newsBaseURL ="https://newsapi.org/"
     val newsApiKey = "d66f6139d662401c8cf9665b61a9eabd"
