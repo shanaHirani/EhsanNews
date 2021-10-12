@@ -31,7 +31,7 @@ class NewsRepository @Inject constructor(
 
             override fun onResponse(call: Call<AllNews>, response: Response<AllNews>) {
                 if (response.code() == 200) {
-                    successJob(response.body()?.newsList?.asDomainModel())//.sortedByDescending { news -> news.publishedAt })
+                    successJob(response.body()?.newsList?.asDomainModel()?.sortedByDescending { news -> news.publishedAt })
                 } else {
                     failureJob(response.errorBody().toString())
                 }
