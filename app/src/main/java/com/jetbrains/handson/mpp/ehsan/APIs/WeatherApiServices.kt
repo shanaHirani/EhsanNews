@@ -1,6 +1,6 @@
 package com.jetbrains.handson.mpp.ehsan.APIs
 
-import com.jetbrains.handson.mpp.ehsan.data.model.WeatherInfoRemoteDataSource
+import com.jetbrains.handson.mpp.ehsan.data.model.WeatherInfoRemoteDataSourceApi
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -10,5 +10,5 @@ interface WeatherApiServices {
     fun getWeatherInfo(
         @Query("q") cityName: String,
         @Query("APPID") apiKey: String,
-    ): Call<WeatherInfoRemoteDataSource>
+    ): Call<WeatherInfoRemoteDataSourceApi>
 }

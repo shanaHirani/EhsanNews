@@ -5,19 +5,15 @@ import android.os.Build
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.StyleSpan
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.jetbrains.handson.mpp.ehsan.data.model.News
 import com.jetbrains.handson.mpp.ehsan.ui.homePage.ApiStatus
-import com.jetbrains.handson.mpp.ehsan.ui.homePage.NewsListAdapter
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.regex.Pattern
@@ -91,17 +87,11 @@ fun bindStatus(statusImageView: ImageView, status: ApiStatus?) {
 
 @RequiresApi(Build.VERSION_CODES.O)
 @BindingAdapter("FormatDate")
-fun formatDate(textView: TextView, rawDate: String) {
-
-
-    val dateRawFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'")
-
-      try{
-        textView.text = LocalDate.parse(rawDate, dateRawFormat)
-            .format(DateTimeFormatter.ofPattern("dd MMM uuuu"))
-      }catch (e:Exception){}
+fun formatDate(textView: TextView, publishedAt:LocalDate) {
+        textView.text = publishedAt.format(DateTimeFormatter.ofPattern("dd MMM uuuu"))
 }
 
+///check is the pattern is "yyyy-MM-dd'T'HH:mm:ss'Z'"
 val datePattern = Pattern.compile(
     "[0-9]{4,4}" + "-" + "[0-9]{2,2}" + "-" + "[0-9]{2,2}" +
             "T" +
