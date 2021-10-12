@@ -85,7 +85,6 @@ fun bindStatus(statusImageView: ImageView, status: ApiStatus?) {
     }
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
 @BindingAdapter("FormatDate")
 fun formatDate(textView: TextView, publishedAt:LocalDate) {
         textView.text = publishedAt.format(DateTimeFormatter.ofPattern("dd MMM uuuu"))
