@@ -19,7 +19,7 @@ android {
         versionCode 1
         versionName "1.0"
         //desugaring Required when setting minSdkVersion to 20 or lower
-        multiDexEnabled = true
+        //multiDexEnabled = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 

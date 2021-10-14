@@ -41,25 +41,28 @@ data class Source(
     val name: String?,
 )
 
-fun List<NewsApi>.asDomainModel(): List<News> {
-
-    // if we con not parse the date defult value is now
+fun NewsApi.asDomainModel(): News{
+    // if we con not parse the date default value is now
     var publishedDate = LocalDate.now()
     val dateRawFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'")
+    try {
+        publishedDate = LocalDate.parse(this.publishedAt, dateRawFormat)
+    } catch (e: Exception) {
+        Log.i("NewsAPI", "con not parse the date of ${this.title}")
+    }
+    return News(
+        author = this.author,
+        content = this.content,
+        description = this.description,
+        publishedAt = publishedDate,
+        title = this.title,
+        url = this.url,
+        urlToImage = this.urlToImage
+    )
+}
+
+fun List<NewsApi>.asDomainModel(): List<News> {
     return map() {
-        try {
-            publishedDate = LocalDate.parse(it.publishedAt, dateRawFormat)
-        } catch (e: Exception) {
-            Log.i("NewsAPI", "con not parse the date of ${it.title}")
-        }
-        News(
-            author = it.author,
-            content = it.content,
-            description = it.description,
-            publishedAt = publishedDate,
-            title = it.title,
-            url = it.url,
-            urlToImage = it.urlToImage
-        )
+        it.asDomainModel()
     }
 }
