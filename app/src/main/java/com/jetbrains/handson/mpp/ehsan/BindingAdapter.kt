@@ -13,6 +13,7 @@ import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.jetbrains.handson.mpp.ehsan.data.repository.uiFormat
 import com.jetbrains.handson.mpp.ehsan.ui.homePage.ApiStatus
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -87,7 +88,7 @@ fun bindStatus(statusImageView: ImageView, status: ApiStatus?) {
 
 @BindingAdapter("FormatDate")
 fun formatDate(textView: TextView, publishedAt:LocalDate) {
-        textView.text = publishedAt.format(DateTimeFormatter.ofPattern("dd MMM uuuu"))
+        textView.text = publishedAt.uiFormat()
 }
 
 ///check is the pattern is "yyyy-MM-dd'T'HH:mm:ss'Z'"

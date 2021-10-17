@@ -67,6 +67,14 @@ class NewsRepository @Inject constructor(
     private fun getTwoDayAgo(): String {
         return LocalDate.now()
             .minus(Period.of(0, 0, 20))
-            .format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))
+            .netFormat()
     }
+}
+
+fun LocalDate.netFormat():String{
+     return this.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))
+}
+
+fun LocalDate.uiFormat():String{
+    return this.format(DateTimeFormatter.ofPattern("dd MMM uuuu"))
 }
