@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import com.jetbrains.handson.mpp.ehsan.data.model.News
 import com.jetbrains.handson.mpp.ehsan.data.model.WeatherInfoDomain
 import com.jetbrains.handson.mpp.ehsan.data.repository.NewsRepository
+import com.jetbrains.handson.mpp.ehsan.shared.Event
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -28,22 +29,18 @@ class HomePageViewModel @Inject constructor(private val newsRepository: NewsRepo
     val newsApiStatus: LiveData<ApiStatus>
         get() = _newsApiStatus
 
-    private val _weatherApiStatus = MutableLiveData<ApiStatus>()
-    val weatherApiStatus:LiveData<ApiStatus>
-        get() = _weatherApiStatus
+    private val _errorMessage = MutableLiveData<Event<String>>()
+    val errorMessage: LiveData<Event<String>>
+        get() = _errorMessage
 
-    private val _toastMassage = MutableLiveData<String>()
-    val toastMassage:LiveData<String>
-    get() = _toastMassage
-
-    private val _navigateToSelectedNews = MutableLiveData<News>()
-    val navigateToSelectedNews:LiveData<News>
+    private val _navigateToSelectedNews = MutableLiveData<Event<News>>()
+    val navigateToSelectedNews:LiveData<Event<News>>
         get() = _navigateToSelectedNews
 
     init {
         _newsApiStatus.value = ApiStatus.LOADING
         newsRepository.getNews({errorExplanation->
-            _toastMassage.value = errorExplanation
+            _errorMessage.value = Event(errorExplanation)
             _newsApiStatus.value = ApiStatus.ERROR
         }, {response->
             _newsList.value = response
@@ -51,19 +48,13 @@ class HomePageViewModel @Inject constructor(private val newsRepository: NewsRepo
         })
 
         newsRepository.getWeatherInfo({errorExplanation->
-            _toastMassage.value = errorExplanation
-            _weatherApiStatus.value = ApiStatus.ERROR
+            _errorMessage.value = Event(errorExplanation)
         }, {response->
             _weatherInfo.value = response
-            _weatherApiStatus.value = ApiStatus.DONE
         })
     }
 
     fun displaySelectedNews(news:News){
-        _navigateToSelectedNews.value = news
-    }
-
-    fun displayNewsComplete(){
-        _navigateToSelectedNews.value = null
+        _navigateToSelectedNews.value = Event(news)
     }
 }

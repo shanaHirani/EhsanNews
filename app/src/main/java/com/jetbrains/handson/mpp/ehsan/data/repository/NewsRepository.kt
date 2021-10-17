@@ -69,7 +69,7 @@ class NewsRepository @Inject constructor(
     @RequiresApi(Build.VERSION_CODES.O)
     private fun getTwoDayAgo(): String {
         return LocalDate.now()
-            .minus(Period.of(0, 0, 11))
+            .minus(Period.of(0, 0, 21))
             .format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))
     }
 }
