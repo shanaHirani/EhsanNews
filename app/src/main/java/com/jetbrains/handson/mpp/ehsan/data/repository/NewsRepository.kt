@@ -1,16 +1,15 @@
 package com.jetbrains.handson.mpp.ehsan.data.repository
 
-import android.os.Build
-import androidx.annotation.RequiresApi
+
 import com.jetbrains.handson.mpp.ehsan.R
 import com.jetbrains.handson.mpp.ehsan.data.model.*
 import com.jetbrains.handson.mpp.ehsan.data.remote.RemoteDataSource
+import com.jetbrains.handson.mpp.ehsan.netFormat
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.time.LocalDate
 import java.time.Period
-import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -71,10 +70,3 @@ class NewsRepository @Inject constructor(
     }
 }
 
-fun LocalDate.netFormat():String{
-     return this.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))
-}
-
-fun LocalDate.uiFormat():String{
-    return this.format(DateTimeFormatter.ofPattern("dd MMM uuuu"))
-}

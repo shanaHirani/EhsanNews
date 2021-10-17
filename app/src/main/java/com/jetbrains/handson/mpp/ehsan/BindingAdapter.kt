@@ -1,22 +1,18 @@
 package com.jetbrains.handson.mpp.ehsan
 
 import android.graphics.Typeface
-import android.os.Build
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.StyleSpan
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.annotation.RequiresApi
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.jetbrains.handson.mpp.ehsan.data.repository.uiFormat
 import com.jetbrains.handson.mpp.ehsan.ui.homePage.ApiStatus
 import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import java.util.regex.Pattern
 
 @BindingAdapter("imgeUrl")
@@ -90,6 +86,8 @@ fun bindStatus(statusImageView: ImageView, status: ApiStatus?) {
 fun formatDate(textView: TextView, publishedAt:LocalDate) {
         textView.text = publishedAt.uiFormat()
 }
+
+
 
 ///check is the pattern is "yyyy-MM-dd'T'HH:mm:ss'Z'"
 val datePattern = Pattern.compile(
