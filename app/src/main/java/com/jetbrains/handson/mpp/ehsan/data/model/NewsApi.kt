@@ -15,6 +15,7 @@ data class AllNews(
 
 @Parcelize
 data class News(
+    val isValid: Boolean = true,
     val author: String?,
     val content: String?,
     val description: String?,
@@ -41,16 +42,19 @@ data class Source(
     val name: String?,
 )
 
-fun NewsApi.asDomainModel(): News{
-    // if we con not parse the date default value is now
+fun NewsApi.asDomainModel(): News {
+    var isValidData: Boolean = true
+
     var publishedDate = LocalDate.now()
     val dateRawFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'")
     try {
         publishedDate = LocalDate.parse(this.publishedAt, dateRawFormat)
     } catch (e: Exception) {
-        Log.i("NewsAPI", "con not parse the date of ${this.title}")
+        isValidData = false
     }
+
     return News(
+        isValid = isValidData,
         author = this.author,
         content = this.content,
         description = this.description,
@@ -64,5 +68,5 @@ fun NewsApi.asDomainModel(): News{
 fun List<NewsApi>.asDomainModel(): List<News> {
     return map() {
         it.asDomainModel()
-    }
+    }.filter { it.isValid }
 }
