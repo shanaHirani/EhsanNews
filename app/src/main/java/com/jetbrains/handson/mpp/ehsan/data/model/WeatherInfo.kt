@@ -2,7 +2,7 @@ package com.jetbrains.handson.mpp.ehsan.data.model
 
 import com.squareup.moshi.Json
 
-data class WeatherInfoRemoteDataSource(
+data class WeatherInfoRemoteDataSourceApi(
     val base: String?,
     val clouds: Clouds?,
     val cod: Int?,
@@ -57,15 +57,15 @@ data class Wind(
     val speed: Double?
 )
 
-data class WeatherInfoDomain(
+data class WeatherInfo(
     val minTmp: Double?,
     val maxTmp: Double?,
     val filesLikeTmp: Double?,
     val weatherStatus: String?
 )
 
-fun WeatherInfoRemoteDataSource.toDomain(): WeatherInfoDomain {
-    return WeatherInfoDomain(
+fun WeatherInfoRemoteDataSourceApi.toDomain(): WeatherInfo {
+    return WeatherInfo(
         minTmp = this.main?.temp_min.kelvinToCelsius(),
         maxTmp = this.main?.temp_max.kelvinToCelsius(),
         filesLikeTmp = this.main?.feels_like.kelvinToCelsius(),
