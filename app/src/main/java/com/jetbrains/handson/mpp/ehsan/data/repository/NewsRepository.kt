@@ -16,7 +16,8 @@ import javax.inject.Singleton
 @Singleton
 class NewsRepository @Inject constructor(
     private val remoteDataSource: RemoteDataSource,
-    private val stringResProvider: StringResProvider
+    private val stringResProvider: StringResProvider,
+    private val timeProvider: TimeProvider
 ) {
     fun getNews(
         failureJob: (errorExplanation: String) -> Unit,
@@ -63,7 +64,7 @@ class NewsRepository @Inject constructor(
             })
     }
 
-    private fun getTwoDayAgo(): String {
+    fun getTwoDayAgo(): String {
         return LocalDate.now()
             .minus(Period.of(0, 0, 20))
             .netFormat()
