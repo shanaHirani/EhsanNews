@@ -38,7 +38,7 @@ class HomePageFragment : Fragment() {
         bindings.newsList.adapter = newsListAdapter
 
         viewModel.newsList.observe(viewLifecycleOwner, {
-            newsListAdapter.submitList(viewModel.newsList.value)
+            newsListAdapter.submitList(it)
         })
 
         viewModel.errorMessage.observe(viewLifecycleOwner, EventObserver { error ->

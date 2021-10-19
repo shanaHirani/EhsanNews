@@ -1,18 +1,15 @@
 package com.jetbrains.handson.mpp.ehsan.data.repository
 
-import android.os.Build
-import android.util.Log
-import androidx.annotation.RequiresApi
+
 import com.jetbrains.handson.mpp.ehsan.R
 import com.jetbrains.handson.mpp.ehsan.data.model.*
 import com.jetbrains.handson.mpp.ehsan.data.remote.RemoteDataSource
-import com.jetbrains.handson.mpp.ehsan.ui.homePage.ApiStatus
+import com.jetbrains.handson.mpp.ehsan.netFormat
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.time.LocalDate
 import java.time.Period
-import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -33,7 +30,7 @@ class NewsRepository @Inject constructor(
 
             override fun onResponse(call: Call<AllNews>, response: Response<AllNews>) {
                 if (response.code() == 200) {
-                    successJob(response.body()?.newsList?.sortedByDescending { news -> news.publishedAt })
+                    successJob(response.body()?.newsList?.asDomainModel()?.sortedByDescending { news -> news.publishedAt })
                 } else {
                     failureJob(response.errorBody().toString())
                 }
@@ -43,18 +40,18 @@ class NewsRepository @Inject constructor(
 
     fun getWeatherInfo(
         failureJob: (errorExplanation: String) -> Unit,
-        successJob: (response: WeatherInfoDomain?) -> Unit
+        successJob: (response: WeatherInfo?) -> Unit
     ) {
         remoteDataSource.getWeatherInfo(stringResProvider.getStringFromSource(R.string.Sydney))
-            .enqueue(object : Callback<WeatherInfoRemoteDataSource> {
+            .enqueue(object : Callback<WeatherInfoRemoteDataSourceApi> {
 
-                override fun onFailure(call: Call<WeatherInfoRemoteDataSource>, t: Throwable) {
+                override fun onFailure(call: Call<WeatherInfoRemoteDataSourceApi>, t: Throwable) {
                     failureJob(t.message.toString())
                 }
 
                 override fun onResponse(
-                    call: Call<WeatherInfoRemoteDataSource>,
-                    response: Response<WeatherInfoRemoteDataSource>
+                    call: Call<WeatherInfoRemoteDataSourceApi>,
+                    response: Response<WeatherInfoRemoteDataSourceApi>
                 ) {
                     if (response.code() == 200) {
                         successJob(response.body()?.toDomain())
@@ -66,10 +63,9 @@ class NewsRepository @Inject constructor(
             })
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun getTwoDayAgo(): String {
         return LocalDate.now()
-            .minus(Period.of(0, 0, 21))
-            .format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))
+            .minus(Period.of(0, 0, 20))
+            .netFormat()
     }
 }

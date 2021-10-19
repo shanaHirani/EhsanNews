@@ -1,12 +1,10 @@
 package com.jetbrains.handson.mpp.ehsan.ui.homePage
 
-import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.jetbrains.handson.mpp.ehsan.data.model.News
-import com.jetbrains.handson.mpp.ehsan.data.model.WeatherInfoDomain
+import com.jetbrains.handson.mpp.ehsan.data.model.WeatherInfo
 import com.jetbrains.handson.mpp.ehsan.data.repository.NewsRepository
 import com.jetbrains.handson.mpp.ehsan.shared.Event
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,8 +19,8 @@ class HomePageViewModel @Inject constructor(private val newsRepository: NewsRepo
     val newsList: LiveData<List<News>>
         get() = _newsList
 
-    private val _weatherInfo = MutableLiveData<WeatherInfoDomain>()
-    val weatherInfo: LiveData<WeatherInfoDomain>
+    private val _weatherInfo = MutableLiveData<WeatherInfo>()
+    val weatherInfo: LiveData<WeatherInfo>
         get() = _weatherInfo
 
     private val _newsApiStatus = MutableLiveData<ApiStatus>()
