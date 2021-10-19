@@ -69,4 +69,3 @@ class NewsRepository @Inject constructor(
             .netFormat()
     }
 }
-

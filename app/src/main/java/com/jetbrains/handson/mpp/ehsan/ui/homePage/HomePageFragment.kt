@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.jetbrains.handson.mpp.ehsan.databinding.FragmentHomePageBinding
+import com.jetbrains.handson.mpp.ehsan.shared.EventObserver
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -17,8 +18,8 @@ class HomePageFragment : Fragment() {
     private val viewModel: HomePageViewModel by viewModels()
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?,
     ): View? {
         val bindings = FragmentHomePageBinding.inflate(inflater)
         bindings.lifecycleOwner = this
@@ -28,11 +29,10 @@ class HomePageFragment : Fragment() {
             viewModel.displaySelectedNews(it)
         })
 
-        viewModel.navigateToSelectedNews.observe(viewLifecycleOwner,{
-            if(it != null){
-                this.findNavController().navigate(HomePageFragmentDirections.actionHomePageFragmentToDetailsFragment(it))
-                viewModel.displayNewsComplete()
-            }
+        viewModel.navigateToSelectedNews.observe(viewLifecycleOwner, EventObserver {
+            this.findNavController().navigate(
+                HomePageFragmentDirections.actionHomePageFragmentToDetailsFragment(it)
+            )
         })
 
         bindings.newsList.adapter = newsListAdapter
@@ -41,12 +41,10 @@ class HomePageFragment : Fragment() {
             newsListAdapter.submitList(it)
         })
 
-        viewModel.toastMassage.observe(viewLifecycleOwner,{
-            if(it != null){
-            Toast.makeText(this.context,it,Toast.LENGTH_LONG).show()
-                //display tost compelte
-            }
+        viewModel.errorMessage.observe(viewLifecycleOwner, EventObserver { error ->
+            Toast.makeText(this.context, error, Toast.LENGTH_LONG).show()
         })
+
         return bindings.root
     }
 }
