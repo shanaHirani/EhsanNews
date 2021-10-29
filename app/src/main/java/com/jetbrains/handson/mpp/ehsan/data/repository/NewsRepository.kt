@@ -66,7 +66,7 @@ class NewsRepository @Inject constructor(
 
     fun getTwoDayAgo(): String {
         return LocalDate.now()
-            .minus(Period.of(0, 0, 20))
+            .minus(Period.of(0, 3, 2))
             .netFormat()
     }
 }
