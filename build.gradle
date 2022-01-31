@@ -3,7 +3,7 @@ buildscript {
         version_glide ="4.8.0"
         kotlin_version = "1.5.31"
         version_navigation = '1.0.0'
-        version_kotlin_coroutines = "1.5.0"
+        version_kotlin_coroutines = "1.5.2"
         version_lifecycle = "2.2.0"
         version_moshi = "1.9.3"
         version_retrofit = "2.9.0"

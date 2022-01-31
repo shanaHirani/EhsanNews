@@ -7,8 +7,8 @@ import retrofit2.http.Query
 
 interface NewsApiServices {
     @GET("/v2/everything?q=tesla")
-    fun getNews(@Query("apikey") apiKey: String,
+    suspend fun getNews(@Query("apikey") apiKey: String,
                 @Query("from") startDate: String,
                 //@Query("sortBy") sortBy: String = "publishedAt"
-    ):Call<AllNews>
+    ):AllNews
 }

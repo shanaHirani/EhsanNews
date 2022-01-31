@@ -12,9 +12,9 @@ class RemoteDataSource @Inject constructor(
     val weatherApiServices: WeatherApiServices,
     val api: API
 ) {
-    fun getNews(startDate: String) =
+    suspend fun getNews(startDate: String) =
         newsApiServices.getNews(apiKey = api.newsApiKey, startDate = startDate)
 
-    fun getWeatherInfo(cityName:String) =
+    suspend fun getWeatherInfo(cityName:String) =
         weatherApiServices.getWeatherInfo(apiKey = api.weatherApiKey,cityName = cityName)
 }

@@ -1,15 +1,16 @@
 package com.jetbrains.handson.mpp.ehsan.ui.homePage
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.jetbrains.handson.mpp.ehsan.databinding.FragmentHomePageBinding
 import com.jetbrains.handson.mpp.ehsan.shared.EventObserver
+import com.jetbrains.handson.mpp.ehsan.shared.NetworkResponse
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -20,7 +21,7 @@ class HomePageFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
+    ): View {
         val bindings = FragmentHomePageBinding.inflate(inflater)
         bindings.lifecycleOwner = this
         bindings.viewModel = viewModel
@@ -38,7 +39,9 @@ class HomePageFragment : Fragment() {
         bindings.newsList.adapter = newsListAdapter
 
         viewModel.newsList.observe(viewLifecycleOwner, {
-            newsListAdapter.submitList(it)
+            if (it is NetworkResponse.Success) {
+                newsListAdapter.submitList(it.value)
+            }
         })
 
         viewModel.errorMessage.observe(viewLifecycleOwner, EventObserver { error ->

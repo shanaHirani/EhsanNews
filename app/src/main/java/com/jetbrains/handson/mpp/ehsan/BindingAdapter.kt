@@ -11,6 +11,7 @@ import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.jetbrains.handson.mpp.ehsan.shared.NetworkResponse
 import com.jetbrains.handson.mpp.ehsan.ui.homePage.ApiStatus
 import java.time.LocalDate
 import java.util.regex.Pattern
@@ -66,17 +67,17 @@ fun setAvailableSpotsString(textView: TextView, weather: String?) {
 }
 
 @BindingAdapter("ApiStatus")
-fun bindStatus(statusImageView: ImageView, status: ApiStatus?) {
+fun bindStatus(statusImageView: ImageView, status: NetworkResponse<*>?) {
     when (status) {
-        ApiStatus.LOADING -> {
+        is NetworkResponse.Loading -> {
             statusImageView.visibility = View.VISIBLE
             statusImageView.setImageResource(R.drawable.loading_animation)
         }
-        ApiStatus.ERROR -> {
+        is NetworkResponse.Failure -> {
             statusImageView.visibility = View.VISIBLE
             statusImageView.setImageResource(R.drawable.ic_connection_error)
         }
-        ApiStatus.DONE -> {
+        is NetworkResponse.Success -> {
             statusImageView.visibility = View.GONE
         }
     }
