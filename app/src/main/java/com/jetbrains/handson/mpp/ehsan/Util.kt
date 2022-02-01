@@ -24,7 +24,7 @@ fun View.snackBar( fragment:Fragment, massage:String, action:(()->Unit)?=null){
         snackBar.show()
     }else {
         snackBar = Snackbar.make(this,massage, Snackbar.LENGTH_INDEFINITE)
-        snackBar.setAction("Retry"){
+        snackBar.setAction(context.getString(R.string.snack_bar_Retry)){
             if(!fragment.isDetached){
             action()}
             snackBar.dismiss()
@@ -40,7 +40,7 @@ fun Fragment.handleApiError(
     when {
         failure.isNetWorkError -> requireView().snackBar(
             this,
-            "please check your internet connection",
+            requireContext().getString(R.string.snack_bar_Retry),
             retry
         )
         else -> {

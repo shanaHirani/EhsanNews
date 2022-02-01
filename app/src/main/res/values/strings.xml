@@ -1,3 +1,4 @@
+
 <resources>
     <string name="app_name">Ehsan</string>
     <string name="minTemp">min: %s</string>
@@ -7,7 +8,13 @@
     <string name="weather">weather: %s</string>
     <string name="hu">hu</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="about_me">neme:shana
-    app version 11</string>
+    <string name="about_me">shaghayegh hirani
+    version 11</string>
     <string name="about_me_title">about me</string>
+
+
+    <!--snack bar -->
+    <string name="snack_bar_Retry">Retry</string>
+    <string name="snack_bar_check_connection">please check your internet connection</string>
+
 </resources>
