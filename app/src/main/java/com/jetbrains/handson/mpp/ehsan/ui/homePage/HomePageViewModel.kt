@@ -26,9 +26,9 @@ class HomePageViewModel @Inject constructor(private val newsRepository: NewsRepo
     val weatherInfo: LiveData<WeatherInfo>
         get() = _weatherInfo
 
-    private val _errorMessage = MutableLiveData<Event<String>>()
-    val errorMessage: LiveData<Event<String>>
-        get() = _errorMessage
+    private val _apiError = MutableLiveData<Event<NetworkResponse.Failure>>()
+    val apiError: LiveData<Event<NetworkResponse.Failure>>
+        get() = _apiError
 
     private val _navigateToSelectedNews = MutableLiveData<Event<News>>()
     val navigateToSelectedNews:LiveData<Event<News>>
@@ -36,28 +36,28 @@ class HomePageViewModel @Inject constructor(private val newsRepository: NewsRepo
 
     init {
         _newsList.value = NetworkResponse.Start
-        getNewsList()
-        getWeatherInfo()
+        getNews()
+        getWeatherInf()
 
     }
 
-    private fun getWeatherInfo()= viewModelScope.launch {
+    fun getNews() = viewModelScope.launch {
+        val result =newsRepository.getNews()
+        _newsList.value = result
+        if(result is NetworkResponse.Failure){
+            _apiError.value = Event(result)
+        }
+    }
 
+     fun getWeatherInf()= viewModelScope.launch {
         val result = newsRepository.getWeatherInfo()
         if (result is NetworkResponse.Failure) {
-           // _errorMessage.value = Event((result.value as NetworkResponse.Failure).errorCode.toString())
+            _apiError.value = Event(result)
         }
         if (result is NetworkResponse.Success) {
             _weatherInfo.value = result.value
         }
 
-    }
-    private fun getNewsList() = viewModelScope.launch {
-        _newsList.value = NetworkResponse.Loading
-        _newsList.value = newsRepository.getNews()
-        if (_newsList.value is NetworkResponse.Failure) {
-                _errorMessage.value = Event((_newsList.value as NetworkResponse.Failure).errorCode.toString())
-        }
     }
 
     fun displaySelectedNews(news:News){

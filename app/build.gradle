@@ -71,10 +71,9 @@ dependencies {
     //unit test
     testImplementation "io.mockk:mockk:1.12.0"
     testImplementation 'com.google.truth:truth:1.1.3'
-
-    //hilt dagger
-    implementation "com.google.dagger:hilt-android:2.38.1"
-    kapt "com.google.dagger:hilt-android-compiler:2.38.1"
+    
+    //snack bar and tow way of data binding
+    implementation "com.google.android.material:material:1.5.0"
 
     //navigation
     implementation "android.arch.navigation:navigation-fragment-ktx:$version_navigation"
