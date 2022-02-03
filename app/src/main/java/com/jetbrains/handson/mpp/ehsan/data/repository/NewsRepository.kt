@@ -34,6 +34,6 @@ class NewsRepository @Inject constructor(
 
     private fun getTwoMonthAgo(): LocalDate {
         return timeProvider.getNowDate()
-            .minus(Period.of(0, 2, 2))
+            .minus(Period.of(0, 2, 0))
     }
 }

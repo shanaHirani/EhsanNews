@@ -18,8 +18,12 @@ enum class ApiStatus { LOADING, ERROR, DONE }
 @HiltViewModel
 class HomePageViewModel @Inject constructor(private val newsRepository: NewsRepository) : ViewModel() {
 
-    private val _newsList = MutableLiveData<NetworkResponse<List<News>>>()
-    val newsList: LiveData<NetworkResponse<List<News>>>
+
+    //api stause ezafe shavad va taghirat ui motanaseb ba an
+    //news list as jense NetworkResponse nabashad
+
+    private val _newsList = MutableLiveData<List<News>>()
+    val newsList: LiveData<List<News>>
         get() = _newsList
 
     private val _weatherInfo = MutableLiveData<WeatherInfo>()
@@ -35,14 +39,15 @@ class HomePageViewModel @Inject constructor(private val newsRepository: NewsRepo
         get() = _navigateToSelectedNews
 
     init {
-        _newsList.value = NetworkResponse.Start
         getNews()
         getWeatherInf()
     }
 
     fun getNews() = viewModelScope.launch {
         val result =newsRepository.getNews()
-        _newsList.value = result
+        if(result is NetworkResponse.Success){
+        _newsList.value = result.value
+        }
         if(result is NetworkResponse.Failure){
             _apiError.value = Event(result)
         }

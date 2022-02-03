@@ -67,7 +67,7 @@ fun setAvailableSpotsString(textView: TextView, weather: String?) {
 }
 
 @BindingAdapter("ApiStatus")
-fun bindStatus(statusImageView: ImageView, status: NetworkResponse<*>?) {
+fun bindStatus(statusImageView: ImageView, status: A?) {
     when (status) {
         is NetworkResponse.Loading -> {
             statusImageView.visibility = View.VISIBLE

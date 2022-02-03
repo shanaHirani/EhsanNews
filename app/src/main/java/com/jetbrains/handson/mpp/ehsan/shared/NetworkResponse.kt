@@ -9,7 +9,5 @@ sealed class NetworkResponse<out T> {
         val errorCode: Int?,
         val errorResponseBody: ResponseBody?
     ) : NetworkResponse<Nothing>()
-
     object Loading : NetworkResponse<Nothing>()
-    object Start : NetworkResponse<Nothing>()
 }

@@ -9,7 +9,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class DetailViewModel @Inject constructor(val state:SavedStateHandle) : ViewModel() {
+class DetailViewModel @Inject constructor(private val state:SavedStateHandle) : ViewModel() {
 
     private val _selectedNews = MutableLiveData<News>()
     val selectedNews:LiveData<News>
