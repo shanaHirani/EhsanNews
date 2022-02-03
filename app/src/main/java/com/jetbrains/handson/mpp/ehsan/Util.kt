@@ -16,11 +16,12 @@ fun LocalDate.uiFormat():String{
     return this.format(DateTimeFormatter.ofPattern("dd MMM uuuu"))
 }
 
+
+
 fun View.snackBar( fragment:Fragment, massage:String, action:(()->Unit)?=null){
-   
     val snackBar:Snackbar
     if(action == null){
-         snackBar = Snackbar.make(this,massage, Snackbar.LENGTH_LONG)
+        snackBar = Snackbar.make(this,massage, Snackbar.LENGTH_LONG)
         snackBar.show()
     }else {
         snackBar = Snackbar.make(this,massage, Snackbar.LENGTH_INDEFINITE)
@@ -40,7 +41,7 @@ fun Fragment.handleApiError(
     when {
         failure.isNetWorkError -> requireView().snackBar(
             this,
-            requireContext().getString(R.string.snack_bar_Retry),
+            requireContext().getString(R.string.snack_bar_check_connection),
             retry
         )
         else -> {

@@ -1,17 +1,14 @@
 package com.jetbrains.handson.mpp.ehsan.data.repository
 
 
-import com.jetbrains.handson.mpp.ehsan.data.model.AllNews
+
 import com.jetbrains.handson.mpp.ehsan.shared.NetworkResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
-import javax.inject.Singleton
 
 abstract class BaseRepository(
-
 ) {
-
     suspend fun <T> safeApiCall(
         apiCall: suspend () -> T
     ): NetworkResponse<T> {
@@ -52,6 +49,4 @@ abstract class BaseRepository(
             }
         }
     }
-
-
 }

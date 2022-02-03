@@ -7,15 +7,14 @@ import kotlinx.android.parcel.Parcelize
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
-data class AllNews(
-    @Json(name = "articles") val newsList: List<NewsApi>,
+data class AllNewsRemoteDataSourceApi(
+    @Json(name = "articles") val newsList: List<NewsRemoteDataSourceApi>,
     val status: String,
     val totalResults: Int,
 )
 
 @Parcelize
 data class News(
-    val isValid: Boolean = true,
     val author: String?,
     val content: String?,
     val description: String?,
@@ -26,7 +25,7 @@ data class News(
 ) : Parcelable
 
 
-data class NewsApi(
+data class NewsRemoteDataSourceApi(
     val author: String?,
     val content: String?,
     val description: String?,
@@ -42,19 +41,17 @@ data class Source(
     val name: String?,
 )
 
-fun NewsApi.asDomainModel(): News {
-    var isValidData: Boolean = true
+fun NewsRemoteDataSourceApi.asDomainModel(): News?{
 
-    var publishedDate = LocalDate.now()
+    var publishedDate: LocalDate
     val dateRawFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'")
     try {
         publishedDate = LocalDate.parse(this.publishedAt, dateRawFormat)
     } catch (e: Exception) {
-        isValidData = false
+        return null
     }
 
     return News(
-        isValid = isValidData,
         author = this.author,
         content = this.content,
         description = this.description,
@@ -65,8 +62,8 @@ fun NewsApi.asDomainModel(): News {
     )
 }
 
-fun List<NewsApi>.asDomainModel(): List<News> {
-    return map() {
+fun List<NewsRemoteDataSourceApi>.asDomainModel(): List<News> {
+    return mapNotNull {
         it.asDomainModel()
-    }.filter { it.isValid }
+    }
 }

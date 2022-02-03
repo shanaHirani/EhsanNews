@@ -9,7 +9,7 @@ import javax.inject.Singleton
 
 @Singleton
 class API @Inject constructor() {
-    //why http cause problem in higher Api
+    //why http cause problem in higher android Api
     //Http could cause security problem in higher Api it need to be manually mention in manifests it is ok to use http
     //android:usesCleartextTraffic="true"
     //Https

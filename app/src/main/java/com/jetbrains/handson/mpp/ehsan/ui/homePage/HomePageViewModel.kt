@@ -38,7 +38,6 @@ class HomePageViewModel @Inject constructor(private val newsRepository: NewsRepo
         _newsList.value = NetworkResponse.Start
         getNews()
         getWeatherInf()
-
     }
 
     fun getNews() = viewModelScope.launch {

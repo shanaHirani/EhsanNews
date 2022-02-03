@@ -22,8 +22,7 @@ class NewsRepository @Inject constructor(
 ) : BaseRepository() {
     suspend fun getNews(): NetworkResponse<List<News>> =
         safeApiCall(
-            { remoteDataSource.getNews(getTwoDayAgo()) },
-            // ::changeNewsAsDomain
+            { remoteDataSource.getNews(getTwoMonthAgo()) },
             { it.newsList.asDomainModel().sortedByDescending { news -> news.publishedAt } }
         )
 
@@ -32,13 +31,9 @@ class NewsRepository @Inject constructor(
             { remoteDataSource.getWeatherInfo(stringResProvider.getStringFromSource(R.string.Sydney)) },
             { it.toDomain() }
         )
-    //fun changeNewsAsDomain(a:AllNews):List<News>{
-    //   return a.newsList.asDomainModel().sortedByDescending { news -> news.publishedAt }
-    //}
 
-    fun getTwoDayAgo(): String {
-        return LocalDate.now()
-            .minus(Period.of(0, 3, 2))
-            .netFormat()
+    private fun getTwoMonthAgo(): LocalDate {
+        return timeProvider.getNowDate()
+            .minus(Period.of(0, 2, 2))
     }
 }
