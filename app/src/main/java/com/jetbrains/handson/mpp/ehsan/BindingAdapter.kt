@@ -66,26 +66,28 @@ fun setAvailableSpotsString(textView: TextView, weather: String?) {
     textView.text = spannableString
 }
 
-@BindingAdapter("ApiStatus")
-fun bindStatus(statusImageView: ImageView, status: A?) {
-    when (status) {
-        is NetworkResponse.Loading -> {
-            statusImageView.visibility = View.VISIBLE
-            statusImageView.setImageResource(R.drawable.loading_animation)
-        }
-        is NetworkResponse.Failure -> {
-            statusImageView.visibility = View.VISIBLE
-            statusImageView.setImageResource(R.drawable.ic_connection_error)
-        }
-        is NetworkResponse.Success -> {
-            statusImageView.visibility = View.GONE
-        }
-    }
-}
+
 
 @BindingAdapter("FormatDate")
 fun formatDate(textView: TextView, publishedAt:LocalDate) {
         textView.text = publishedAt.uiFormat()
+}
+
+@BindingAdapter("ApiStatus")
+fun bindStatus(statusImageView: ImageView, status: ApiStatus?) {
+    when (status) {
+        ApiStatus.LOADING -> {
+            statusImageView.visibility = View.VISIBLE
+            statusImageView.setImageResource(R.drawable.loading_animation)
+        }
+        ApiStatus.ERROR -> {
+            statusImageView.visibility = View.VISIBLE
+            statusImageView.setImageResource(R.drawable.ic_connection_error)
+        }
+        ApiStatus.DONE -> {
+            statusImageView.visibility = View.GONE
+        }
+    }
 }
 
 

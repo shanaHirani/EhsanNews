@@ -16,11 +16,13 @@ import javax.inject.Inject
 enum class ApiStatus { LOADING, ERROR, DONE }
 
 @HiltViewModel
-class HomePageViewModel @Inject constructor(private val newsRepository: NewsRepository) : ViewModel() {
+class HomePageViewModel @Inject constructor(private val newsRepository: NewsRepository) :
+    ViewModel() {
 
+    private val _newsApiStatus = MutableLiveData<ApiStatus>()
+    val newsApiStatus: LiveData<ApiStatus>
+        get() = _newsApiStatus
 
-    //api stause ezafe shavad va taghirat ui motanaseb ba an
-    //news list as jense NetworkResponse nabashad
 
     private val _newsList = MutableLiveData<List<News>>()
     val newsList: LiveData<List<News>>
@@ -35,7 +37,7 @@ class HomePageViewModel @Inject constructor(private val newsRepository: NewsRepo
         get() = _apiError
 
     private val _navigateToSelectedNews = MutableLiveData<Event<News>>()
-    val navigateToSelectedNews:LiveData<Event<News>>
+    val navigateToSelectedNews: LiveData<Event<News>>
         get() = _navigateToSelectedNews
 
     init {
@@ -44,16 +46,19 @@ class HomePageViewModel @Inject constructor(private val newsRepository: NewsRepo
     }
 
     fun getNews() = viewModelScope.launch {
-        val result =newsRepository.getNews()
-        if(result is NetworkResponse.Success){
-        _newsList.value = result.value
+        _newsApiStatus.value = ApiStatus.LOADING
+        val result = newsRepository.getNews()
+        if (result is NetworkResponse.Success) {
+            _newsApiStatus.value = ApiStatus.DONE
+            _newsList.value = result.value
         }
-        if(result is NetworkResponse.Failure){
+        if (result is NetworkResponse.Failure) {
+            _newsApiStatus.value = ApiStatus.ERROR
             _apiError.value = Event(result)
         }
     }
 
-     fun getWeatherInf()= viewModelScope.launch {
+    fun getWeatherInf() = viewModelScope.launch {
         val result = newsRepository.getWeatherInfo()
         if (result is NetworkResponse.Failure) {
             _apiError.value = Event(result)
@@ -64,7 +69,7 @@ class HomePageViewModel @Inject constructor(private val newsRepository: NewsRepo
 
     }
 
-    fun displaySelectedNews(news:News){
+    fun displaySelectedNews(news: News) {
         _navigateToSelectedNews.value = Event(news)
     }
 }

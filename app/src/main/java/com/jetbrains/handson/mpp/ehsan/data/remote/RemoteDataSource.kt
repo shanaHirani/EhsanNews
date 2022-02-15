@@ -17,9 +17,7 @@ class RemoteDataSource @Inject constructor(
     val api: API
 ) {
     suspend fun getNews(startDate:LocalDate):AllNewsRemoteDataSourceApi {
-        var a : String = startDate.netFormat()
-        Log.i("ssssssss",a)
-        return newsApiServices.getNews(apiKey = api.newsApiKey, startDate = a )
+        return newsApiServices.getNews(apiKey = api.newsApiKey, startDate = startDate.netFormat())
     }
 
     suspend fun getWeatherInfo(cityName:String) =
