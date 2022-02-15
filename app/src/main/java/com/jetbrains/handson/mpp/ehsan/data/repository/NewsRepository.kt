@@ -19,14 +19,14 @@ class NewsRepository @Inject constructor(
     private val remoteDataSource: RemoteDataSource,
     private val stringResProvider: StringResProvider,
     private val timeProvider: TimeProvider,
-) : BaseRepository() {
-    suspend fun getNews(): NetworkResponse<List<News>> =
+) : BaseRepository(),NewsRepositoryInterface {
+    override suspend fun getNews(): NetworkResponse<List<News>> =
         safeApiCall(
             { remoteDataSource.getNews(getTwoMonthAgo()) },
             { it.newsList.asDomainModel().sortedByDescending { news -> news.publishedAt } }
         )
 
-    suspend fun getWeatherInfo(): NetworkResponse<WeatherInfo> =
+    override suspend fun getWeatherInfo(): NetworkResponse<WeatherInfo> =
         safeApiCall(
             { remoteDataSource.getWeatherInfo(stringResProvider.getStringFromSource(R.string.Sydney)) },
             { it.toDomain() }
