@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jetbrains.handson.mpp.ehsan.data.model.News
 import com.jetbrains.handson.mpp.ehsan.data.model.WeatherInfo
-import com.jetbrains.handson.mpp.ehsan.data.repository.NewsRepository
+import com.jetbrains.handson.mpp.ehsan.data.repository.NewsRepositoryInterface
 import com.jetbrains.handson.mpp.ehsan.shared.Event
 import com.jetbrains.handson.mpp.ehsan.shared.NetworkResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,7 +16,7 @@ import javax.inject.Inject
 enum class ApiStatus { LOADING, ERROR, DONE }
 
 @HiltViewModel
-class HomePageViewModel @Inject constructor(private val newsRepository: NewsRepository) :
+class HomePageViewModel @Inject constructor(private val newsRepository: NewsRepositoryInterface) :
     ViewModel() {
 
     private val _newsApiStatus = MutableLiveData<ApiStatus>()
