@@ -60,13 +60,12 @@ class HomePageViewModel @Inject constructor(private val newsRepository: NewsRepo
 
     fun getWeatherInf() = viewModelScope.launch {
         val result = newsRepository.getWeatherInfo()
-        if (result is NetworkResponse.Failure) {
-            _apiError.value = Event(result)
-        }
         if (result is NetworkResponse.Success) {
             _weatherInfo.value = result.value
         }
-
+        if (result is NetworkResponse.Failure) {
+            _apiError.value = Event(result)
+        }
     }
 
     fun displaySelectedNews(news: News) {
