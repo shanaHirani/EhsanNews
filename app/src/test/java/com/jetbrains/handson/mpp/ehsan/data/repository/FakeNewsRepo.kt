@@ -7,23 +7,23 @@ import java.time.LocalDate
 
 class FakeNewsRepo : NewsRepositoryInterface {
 
-    lateinit var weatherInfo: NetworkResponse<WeatherInfo>
-    lateinit var news:NetworkResponse<List<News>>
+    private var weatherInfo: NetworkResponse<WeatherInfo> = NetworkResponse.Loading
+    private var news:NetworkResponse<List<News>> = NetworkResponse.Loading
 
     fun setup(getWeatherInfoSuccess: Boolean, getNewsSuccess: Boolean) {
-        if (getWeatherInfoSuccess) {
-            weatherInfo = NetworkResponse.Success(
+        weatherInfo = if (getWeatherInfoSuccess) {
+            NetworkResponse.Success(
                 WeatherInfo(5.0, 30.0, 32.0, "cloud")
             )
         } else {
-            weatherInfo = NetworkResponse.Failure(
+            NetworkResponse.Failure(
                 false, 500, null
             )
         }
-        if (getNewsSuccess) {
-            news =NetworkResponse.Success(listOf(news1, news2))
+        news = if (getNewsSuccess) {
+            NetworkResponse.Success(listOf(news1, news2))
         } else {
-            news = NetworkResponse.Failure(
+            NetworkResponse.Failure(
                 false, 500, null
             )
         }
