@@ -16,7 +16,8 @@ class HomePageViewModelTest {
 
     @Test
     fun if_repo_get_weather_info_return_error_apiStatus_is_error(){
-        fakeNewsRepo.failureGetWeatherInfo()
+        fakeNewsRepo.setup(getWeatherInfoSuccess = false, getNewsSuccess = true)
+        viewModel.getWeatherInf()
     }
 
 }

@@ -3,10 +3,33 @@ package com.jetbrains.handson.mpp.ehsan.data.repository
 import com.jetbrains.handson.mpp.ehsan.data.model.News
 import com.jetbrains.handson.mpp.ehsan.data.model.WeatherInfo
 import com.jetbrains.handson.mpp.ehsan.shared.NetworkResponse
-import okhttp3.ResponseBody
 import java.time.LocalDate
 
-class FakeNewsRepo:NewsRepositoryInterface {
+class FakeNewsRepo : NewsRepositoryInterface {
+
+    lateinit var weatherInfo: NetworkResponse<WeatherInfo>
+    lateinit var news:NetworkResponse<List<News>>
+
+    fun setup(getWeatherInfoSuccess: Boolean, getNewsSuccess: Boolean) {
+        if (getWeatherInfoSuccess) {
+            weatherInfo = NetworkResponse.Success(
+                WeatherInfo(5.0, 30.0, 32.0, "cloud")
+            )
+        } else {
+            weatherInfo = NetworkResponse.Failure(
+                false, 500, null
+            )
+        }
+        if (getNewsSuccess) {
+            news =NetworkResponse.Success(listOf(news1, news2))
+        } else {
+            news = NetworkResponse.Failure(
+                false, 500, null
+            )
+        }
+
+    }
+
     var news1 = News(
         "shaghayegh",
         "news about art",
@@ -26,23 +49,12 @@ class FakeNewsRepo:NewsRepositoryInterface {
         "google"
     )
 
-    lateinit var weatherInfo : NetworkResponse<WeatherInfo>
-
-    fun successGetWeatherInfo(){
-        weatherInfo = NetworkResponse.Success(
-            WeatherInfo(5.0,30.0,32.0,"cloud")
-        )
-    }
-
-    fun failureGetWeatherInfo(){
-        weatherInfo = NetworkResponse.Failure(false,500,null)
-    }
 
     override suspend fun getWeatherInfo(): NetworkResponse<WeatherInfo> {
         return weatherInfo
     }
 
     override suspend fun getNews(): NetworkResponse<List<News>> {
-        return NetworkResponse.Success(listOf(news1,news2))
+        return news
     }
 }
