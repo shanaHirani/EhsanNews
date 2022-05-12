@@ -9,6 +9,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import java.util.concurrent.TimeoutException
 
 //we have to tell this test use coroutine
 @ExperimentalCoroutinesApi
@@ -37,14 +38,14 @@ class HomePageViewModelTest {
         assertThat(value.peekContent()).isNotEqualTo(null)
     }
 
-   @Test(expected = Exception::class)
+   @Test(expected = TimeoutException::class)
     fun if_repo_get_weather_info_not_return_error_apiStatusEvent_is_null(){
         fakeNewsRepo.setup(getWeatherInfoSuccess = true, getNewsSuccess = true)
         viewModel.getWeatherInf()
         val value= viewModel.apiError.getOrAwaitValueTest()
     }
 
-    @Test(expected = Exception::class)
+    @Test(expected = TimeoutException::class)
     fun if_repo_get_weather_info_return_error_weatherInfo_is_null(){
         fakeNewsRepo.setup(getWeatherInfoSuccess = false, getNewsSuccess = true)
         viewModel.getWeatherInf()

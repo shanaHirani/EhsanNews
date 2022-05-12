@@ -1,2 +1,11 @@
 see the site
 https://developer.android.com/training/dependency-injection/hilt-testing
+add to gradel app
+debugImplementation 'androidx.fragment:fragment-testing:1.2.5'
+make debuge folder
+add HiltTestActivity
+add manifest
+add HiltTestRunner
+chang in gradel app
+testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner" to
+testInstrumentationRunner "com.atilsamancioglu.artbookhilttesting.HiltTestRunner"

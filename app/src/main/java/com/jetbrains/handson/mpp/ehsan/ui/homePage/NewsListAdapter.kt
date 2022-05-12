@@ -18,7 +18,6 @@ class NewsListAdapter(val onClickListener: OnClickListener):ListAdapter<News,New
 
         @SuppressLint("DiffUtilEquals")
         override fun areContentsTheSame(oldItem: News, newItem: News): Boolean {
-
             if(oldItem.url != null)
                 return oldItem.url == newItem.url
             return oldItem.title == newItem.title
